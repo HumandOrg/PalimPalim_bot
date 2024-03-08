@@ -12,7 +12,7 @@ const replyToMessage = (ctx: Context, messageId: number, string: string) =>
   });
 
 const newMem = () => async (ctx: Context) => {
-  debug('Triggered "newMem" text command');
+  debug('Triggered "newMems" text command');
   console.log(ctx.message);
   await fetchData();
   const messageId = ctx.message?.message_id;
