@@ -1,14 +1,19 @@
 {
   "compilerOptions": {
+    "outDir": "./built",
+    "allowJs": true,
+    "target": "es2020",
+    "module": "nodenext",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
     "strict": true,
-    "target": "esnext",
-    "moduleResolution": "node",
-    "module": "commonjs",
-    "skipLibCheck": true,
-    "sourceMap": true,
-    "outDir": "public",
-    "lib": ["esnext", "dom"],
-    "resolveJsonModule": true
+    "paths": {
+      "@/*": ["./src/*"],
+    },
   },
-  "exclude": ["node_modules"]
+  "include": ["./src/**/*", "./test/**/*"],
+
+  "ts-node": {
+    "require": ["tsconfig-paths/register"],
+  },
 }

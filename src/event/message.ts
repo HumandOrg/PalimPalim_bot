@@ -1,22 +1,27 @@
 import { Context } from 'telegraf';
 import createDebug from 'debug';
+import { fetchData } from '@/supabase';
 
 const debug = createDebug('bot:greeting_text');
 
 const replyToMessage = (ctx: Context, messageId: number, string: string) =>
   ctx.reply(string, {
-    reply_to_message_id: messageId,
+    reply_parameters: {
+      message_id: messageId,
+    },
   });
 
-const greeting = () => async (ctx: Context) => {
+const message = () => async (ctx: Context) => {
   debug('Triggered "greeting" text command');
   console.log(ctx.message);
+  await fetchData();
   const messageId = ctx.message?.message_id;
-  const userName = `${ctx.message?.from.first_name} ${ctx.message?.from.last_name}`;
+  const first_name = `${ctx.message?.from.first_name}`;
+  const userName = `${ctx.message?.from.username}`;
 
   if (messageId) {
-    await replyToMessage(ctx, messageId, `Hello??, ${userName}!`);
+    await replyToMessage(ctx, messageId, `Hello, ${userName}!`);
   }
 };
 
-export { greeting };
+export { message };

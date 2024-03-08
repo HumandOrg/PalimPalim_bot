@@ -1,6 +1,6 @@
 import { Context, Telegraf } from 'telegraf';
-import { Update } from 'telegraf/typings/core/types/typegram';
 import createDebug from 'debug';
+import { Update } from '@telegraf/types';
 
 const debug = createDebug('bot:dev');
 
