@@ -4,13 +4,18 @@ const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
+
+
 // 查询数据
-export async function fetchData() {
+export async function fetchData(table_name:any) {
+  //console.log(table_name);
   try {
-    const { data, error } = await supabase.from('countries').select();
+    const { data, error } = await supabase.from(table_name).select();
     if (error) {
       logger.error('Error fetching data:', error);
+      return;
     }
+    return data;
   } catch (error) {
     logger.error('Error fetching data:', error);
   }
@@ -27,12 +32,14 @@ export async function getArtistData() {
   }
 }
 // 插入数据
-export async function insertData() {
+export async function insertData(data:number, ) {
   try {
-    const { data, error } = await supabase.from('table_name').insert([
-      { column1: 'value1', column2: 'value2' },
-      { column1: 'value3', column2: 'value4' },
-    ]);
+    const { data, error } = await supabase.from('Try_Members').insert(
+      { id: "1", 
+        //created_at: "",
+        email: "111"
+      }
+      );
     if (error) {
       throw error;
     }
@@ -62,9 +69,9 @@ export async function updateData() {
 export async function deleteData() {
   try {
     const { data, error } = await supabase
-      .from('table_name')
+      .from('Try_Members')
       .delete()
-      .eq('id', 1);
+      .eq('email', 111);
     if (error) {
       throw error;
     }
