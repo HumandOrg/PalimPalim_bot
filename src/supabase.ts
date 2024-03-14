@@ -11,6 +11,16 @@ export async function fetchData() {
     if (error) {
       logger.error('Error fetching data:', error);
     }
+  } catch (error) {
+    logger.error('Error fetching data:', error);
+  }
+}
+export async function getArtistData() {
+  try {
+    const { data, error } = await supabase.from('artists').select();
+    if (error) {
+      logger.error('Error fetching data:', error);
+    }
     console.log('fetching data:', data);
   } catch (error) {
     logger.error('Error fetching data:', error);
@@ -31,6 +41,7 @@ export async function insertData() {
     logger.error('Error inserting data:', error);
   }
 }
+
 // 更新数据
 export async function updateData() {
   try {
@@ -46,6 +57,7 @@ export async function updateData() {
     logger.error('Error updating data:', error);
   }
 }
+
 // 删除数据
 export async function deleteData() {
   try {
