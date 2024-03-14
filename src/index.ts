@@ -1,6 +1,6 @@
 import { Telegraf } from 'telegraf';
-import { about, connect, help, start } from './commands';
-import { message, leftMem, newMem } from './event/index';
+import { about, connect, help, start, test } from './commands';
+import { leftMem, message, newMem } from './event/index';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { development, production } from './core';
 
@@ -29,6 +29,7 @@ bot.command('about', about());
 bot.command('help', help());
 bot.command('start', start());
 bot.command('connect', connect());
+bot.command('test', test());
 bot.on('message', message());
 bot.on('new_chat_members', newMem());
 bot.on('left_chat_member', leftMem());

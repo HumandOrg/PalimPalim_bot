@@ -14,7 +14,6 @@ const replyToMessage = (ctx: Context, messageId: number, string: string) =>
 const message = () => async (ctx: Context) => {
   debug('Triggered "greeting" text command');
   console.log(ctx.message);
-  await fetchData();
   const messageId = ctx.message?.message_id;
   const first_name = `${ctx.message?.from.first_name}`;
   const userName = `${ctx.message?.from.username}`;
