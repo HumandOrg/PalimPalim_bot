@@ -1,5 +1,15 @@
 import { Telegraf } from 'telegraf';
-import { about, connect, help, start, test } from './commands';
+import {
+  about,
+  connect,
+  dailyTest,
+  help,
+  info,
+  invite,
+  mint,
+  start,
+  test,
+} from './commands';
 import { leftMem, message, newMem } from './event/index';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { development, production } from './core';
@@ -26,10 +36,15 @@ const newMembersHandler = newMem();
 // });
 
 bot.command('about', about());
-bot.command('help', help());
-bot.command('start', start());
 bot.command('connect', connect());
+bot.command('dailyTest', dailyTest());
+bot.command('help', help());
+bot.command('info', info());
+bot.command('invite', invite());
+bot.command('mint', mint());
+bot.command('start', start());
 bot.command('test', test());
+
 bot.on('message', message());
 bot.on('new_chat_members', newMem());
 bot.on('left_chat_member', leftMem());
