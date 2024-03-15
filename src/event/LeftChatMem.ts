@@ -1,6 +1,7 @@
 import { Context } from 'telegraf';
 import createDebug from 'debug';
 import { fetchData } from '@/supabase';
+import { tableMap } from '@/types';
 
 const debug = createDebug('bot:greeting_text');
 
@@ -15,7 +16,7 @@ const leftMem = () => async (ctx: Context) => {
   debug('Triggered "left" text command');
   console.log(ctx.message);
   //fetchData("Try_Member");
-  await fetchData("Try_Members");
+  await fetchData(tableMap.user);
   const messageId = ctx.message?.message_id;
   const first_name = `${ctx.message?.from.first_name}`;
   const userName = `${ctx.message?.from.username}`;

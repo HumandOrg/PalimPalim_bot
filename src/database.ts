@@ -1,6 +1,5 @@
 import mysql, { ResultSetHeader, RowDataPacket } from 'mysql2';
 import logger from '@/logger';
-import { MsgModel } from '@/types';
 
 // Create the connection pool. The pool-specific settings are the defaults
 const pool = mysql.createPool({
@@ -313,17 +312,17 @@ export async function getGroupMsgs(chatId: number) {
     logger.error(`Error processing group ${chatId}:`, error);
   }
 }
-export async function addNewMessage(entry: MsgModel) {
-  const { id, chat_id, msg, reply_to, user_id, msg_type } = entry;
-  try {
-    await pool.execute(
-      'INSERT INTO msgs (id, chat_id, msg, reply_to, user_id, msg_type) VALUES (?, ?, ?, ?, ?, ?)',
-      [id, chat_id, msg, reply_to || null, user_id, msg_type],
-    );
-  } catch (error) {
-    logger.error('Error inserting into database:', error);
-  }
-}
+// export async function addNewMessage(entry: MsgModel) {
+//   const { id, chat_id, msg, reply_to, user_id, msg_type } = entry;
+//   try {
+//     await pool.execute(
+//       'INSERT INTO msgs (id, chat_id, msg, reply_to, user_id, msg_type) VALUES (?, ?, ?, ?, ?, ?)',
+//       [id, chat_id, msg, reply_to || null, user_id, msg_type],
+//     );
+//   } catch (error) {
+//     logger.error('Error inserting into database:', error);
+//   }
+// }
 export async function isAdmin(userId: number) {
   try {
     const [rows] = await pool

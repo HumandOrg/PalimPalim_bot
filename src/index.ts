@@ -1,4 +1,4 @@
-import { Telegraf } from 'telegraf';
+import { Context, session, Telegraf } from 'telegraf';
 import {
   about,
   connect,
@@ -16,24 +16,27 @@ import { development, production } from './core';
 
 const BOT_TOKEN = process.env.BOT_TOKEN || '';
 const ENVIRONMENT = process.env.NODE_ENV || '';
-const bot = new Telegraf(BOT_TOKEN);
-// 使用 filter utils 來過濾新成員加入事件
-const newMembersHandler = newMem();
+interface SessionData {
+  heyCounter: number;
+}
 
-// 使用 filter utils 來過濾成員離開事件
-// const leftMemberHandler = ();
+interface BotContext extends Context {
+  session?: SessionData;
+}
 
-// // 設置處理新成員加入事件的中間件
-// bot.on(newMembersHandler, (ctx) => {
-//     // 在這裡處理新成員加入事件的邏輯
-//     console.log('新成員加入：', ctx.update.message.new_chat_members);
-// });
+const bot = new Telegraf<BotContext>(BOT_TOKEN);
 
-// // 設置處理成員離開事件的中間件
-// bot.on(leftMemberHandler, (ctx) => {
-//     // 在這裡處理成員離開事件的邏輯
-//     console.log('成員離開：', ctx.update.message.left_chat_member);
-// });
+// // Register session middleware
+bot.use(session());
+
+// Register logger middleware
+bot.use((ctx, next) => {
+  const start = Date.now();
+  return next().then(() => {
+    const ms = Date.now() - start;
+    console.log('response time %sms', ms);
+  });
+});
 
 bot.command('about', about());
 bot.command('connect', connect());
@@ -46,10 +49,9 @@ bot.command('start', start());
 bot.command('test', test());
 
 bot.on('message', message());
+//TODO: Check V5 寫法
 bot.on('new_chat_members', newMem());
 bot.on('left_chat_member', leftMem());
-
-// bot.on('sticker', (ctx) => ctx.reply('👍'));
 
 //prod mode (Vercel)
 export const startVercel = async (req: VercelRequest, res: VercelResponse) => {

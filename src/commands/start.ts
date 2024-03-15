@@ -4,7 +4,7 @@ import createDebug from 'debug';
 const debug = createDebug('bot:about_command');
 
 const start = () => async (ctx: Context) => {
-  debug(`Triggered "connect" command with message`);
+  debug(`Triggered "start" command with message`);
   const profileUrl = 'https://tgt-dashboard.vercel.app/profile/';
 
   const keyboardMarkup = {

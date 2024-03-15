@@ -1,10 +1,17 @@
-interface MsgModel {
-  id: number;
-  chat_id: number;
-  user_id?: number;
-  msg_type: string;
-  msg?: string;
-  reply_to?: number;
-}
-
-export { MsgModel };
+export type TableName =
+  | 'artist'
+  | 'user'
+  | 'msgs'
+  | 'chat_members'
+  | 'group_config'
+  | 'group_tags'
+  | 'user_in_chat';
+export const tableMap: Record<TableName, TableName> = {
+  artist: 'artist',
+  user: 'user',
+  msgs: 'msgs',
+  chat_members: 'chat_members',
+  group_config: 'group_config',
+  group_tags: 'group_tags',
+  user_in_chat: 'user_in_chat',
+};
