@@ -14,8 +14,8 @@ const replyToMessage = (ctx: Context, messageId: number, string: string) =>
 const leftMem = () => async (ctx: Context) => {
   debug('Triggered "left" text command');
   console.log(ctx.message);
-  fetchData();
-  await fetchData();
+  //fetchData("Try_Member");
+  await fetchData("Try_Members");
   const messageId = ctx.message?.message_id;
   const first_name = `${ctx.message?.from.first_name}`;
   const userName = `${ctx.message?.from.username}`;
