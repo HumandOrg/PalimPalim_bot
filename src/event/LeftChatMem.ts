@@ -16,7 +16,7 @@ const leftMem = () => async (ctx: Context) => {
   debug('Triggered "left" text command');
   console.log(ctx.message);
   //fetchData("Try_Member");
-  await fetchData(tableMap.user);
+  await fetchData(tableMap.users);
   const messageId = ctx.message?.message_id;
   const first_name = `${ctx.message?.from.first_name}`;
   const userName = `${ctx.message?.from.username}`;

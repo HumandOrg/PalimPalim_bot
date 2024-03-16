@@ -1,6 +1,6 @@
 import { Context } from 'telegraf';
 import createDebug from 'debug';
-import { fetchData } from '@/supabase';
+import { fetchData, getOrCreateUser } from '@/supabase';
 
 const debug = createDebug('bot:greeting_text');
 
@@ -12,15 +12,18 @@ const replyToMessage = (ctx: Context, messageId: number, string: string) =>
   });
 
 const message = () => async (ctx: Context) => {
-  debug('Triggered "greeting" text command');
-  console.log(ctx.message);
+  debug('Triggered "message" event');
+  const userId = ctx.message?.from.id;
+  const userName = ctx.message?.from.username;
+  const firstName = ctx.message?.from.first_name;
   const messageId = ctx.message?.message_id;
-  const first_name = `${ctx.message?.from.first_name}`;
-  const userName = `${ctx.message?.from.username}`;
-
-  if (messageId) {
-    await replyToMessage(ctx, messageId, `Hello, ${userName}!`);
-  }
+  await getOrCreateUser(
+    userId as number,
+    userName ? userName : firstName ? firstName : '',
+  );
+  // if (messageId) {
+  //   await replyToMessage(ctx, messageId, `Hello, ${userName}!`);
+  // }
 };
 
 export { message };

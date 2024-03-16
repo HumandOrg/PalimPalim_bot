@@ -1,11 +1,6 @@
 import { Context } from 'telegraf';
 import createDebug from 'debug';
-import {
-  deleteData,
-  fetchData,
-  insertData,
-  getOrCreateChatUser,
-} from '@/supabase';
+import { deleteData, fetchData, insertData, getOrCreateUser } from '@/supabase';
 import { TableName } from '@/types';
 //import { getOrCreateChatUser } from '@/database';
 
@@ -18,7 +13,7 @@ const test = () => async (ctx: Context) => {
   //console.log(data);
   const userID = 1;
   const chatID = 2;
-  await getOrCreateChatUser(userID, chatID);
+  //   await getOrCreateUser(userID);
 };
 
 export { test };
