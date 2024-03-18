@@ -101,44 +101,34 @@ export async function getOrCreateUser(userId: number, userName: string) {
     logger.error('Error creating user:', error);
   }
 }
-
 export async function getOrCreateChatUser(chatId: number, userId: number) {
   try {
-    // 檢查是否存在使用者
-    //console.log(chatId, userId);
     const { data: existingUser, error: userError } = await supabase
-      .from('chat_members')
+      .from(tableMap.chat_members)
       .select('*')
-      .eq('user_id', userId)
-      .eq('chat_id', chatId);
-    //.single(); // 返回單一結果 //這個不知道是啥，要再研究一下,多這一行會跑錯誤訊息
+      .eq('chat_id', chatId)
+      .eq('user_id', userId);
 
     if (userError) {
       throw userError;
     }
 
-    if (!existingUser) {
-      // 如果已經存在使用者，existinguser是空
-      console.log(existingUser);
-      return existingUser; // 返回現有使用者
+    if (existingUser.length > 0) {
+      return existingUser;
     } else {
-      // 如果不存在使用者，創建新使用者
-      const { data: newUser, error: newUserError } = await supabase
-        .from('chat_members')
-        .insert([{ chat_id: chatId, user_id: userId }]) // 插入新使用者資料
-        .single(); // 返回單個結果
-
+      const { error: newUserError } = await supabase
+        .from(tableMap.chat_members)
+        .insert([{ chat_id: chatId, user_id: userId }])
+        .single();
+      console.log(newUserError);
       if (newUserError) {
         throw newUserError;
       }
-      //console.log("2. Created Success");
-
-      // 查詢並返回新建的使用者數據
       const { data: newUserRows, error: newUserRowsError } = await supabase
         .from('chat_members')
         .select('*')
         .eq('user_id', userId)
-        .single(); // 返回單個結果
+        .single();
 
       if (newUserRowsError) {
         throw newUserRowsError;
