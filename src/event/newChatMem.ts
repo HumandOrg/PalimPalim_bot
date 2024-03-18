@@ -15,7 +15,7 @@ const replyToMessage = (ctx: Context, messageId: number, string: string) =>
 const newMem = () => async (ctx: Context) => {
   debug('Triggered "newMems" text command');
   console.log(ctx.message);
-  await fetchData(tableMap.user);
+  await fetchData(tableMap.users);
   const messageId = ctx.message?.message_id;
   const first_name = `${ctx.message?.from.first_name}`;
   const userName = `${ctx.message?.from.username}`;

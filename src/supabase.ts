@@ -13,6 +13,7 @@ export async function fetchData(table_name: TableName) {
       logger.error('Error fetching data:', error);
       throw error;
     }
+    console.log('Fetched data:', data);
     return data;
   } catch (error) {
     logger.error('Error fetching data:', error);
@@ -64,16 +65,44 @@ export async function deleteData(table_name: TableName) {
     logger.error('Error deleting data:', error);
   }
 }
-
-export async function getArtistData() {
+export async function getOrCreateUser(userId: number, userName: string) {
   try {
-    const artistData = await fetchData(tableMap.artist);
-    return artistData;
+    const { data: existingUser, error: userError } = await supabase
+      .from(tableMap.users)
+      .select('*')
+      .eq('user_id', userId);
+
+    if (userError) {
+      throw userError;
+    }
+
+    if (existingUser.length > 0) {
+      return existingUser;
+    } else {
+      const { error: newUserError } = await supabase
+        .from(tableMap.users)
+        .insert([{ user_id: userId, username: userName }])
+        .single();
+      if (newUserError) {
+        throw newUserError;
+      }
+      const { data: newUserRows, error: newUserRowsError } = await supabase
+        .from(tableMap.users)
+        .select('*')
+        .eq('user_id', userId)
+        .single();
+
+      if (newUserRowsError) {
+        throw newUserRowsError;
+      }
+      return newUserRows;
+    }
   } catch (error) {
-    logger.error('Error fetching artist data:', error);
+    logger.error('Error creating user:', error);
   }
 }
-export async function getOrCreateChatUser(chatId: any, userId: any) {
+
+export async function getOrCreateChatUser(chatId: number, userId: number) {
   try {
     // 檢查是否存在使用者
     //console.log(chatId, userId);
@@ -118,5 +147,19 @@ export async function getOrCreateChatUser(chatId: any, userId: any) {
     }
   } catch (error) {
     logger.error('Error creating user:', error);
+  }
+}
+export async function inviteFromUser(userId: number, inviteFromId: number) {
+  try {
+    const { data, error } = await supabase
+      .from(tableMap.users)
+      .update({ inviteFrom_id: inviteFromId })
+      .eq('user_id', userId);
+    if (error) {
+      logger.error('Error inserting data:', error);
+    }
+    return data;
+  } catch (error) {
+    logger.error('Error inserting data:', error);
   }
 }
