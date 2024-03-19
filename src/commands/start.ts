@@ -1,6 +1,6 @@
-import { getOrCreateUser, inviteFromUser } from '@/supabase';
+import { getOrCreateUser, inviteFromUser, fetchInviter } from '@/supabase';
 import createDebug from 'debug';
-import { fetchinviter } from '@/supabase';
+// import { fetchInviter } from '@/supabase';
 import { tableMap } from '@/types';
 
 const debug = createDebug('bot:about_command');
@@ -10,21 +10,20 @@ const start = () => async (ctx: any) => {
   const profileUrl = 'https://tgt-dashboard.vercel.app/profile/';
 
   const keyboardMarkup = {
-    inline_keyboard: [[{ text: '你老媽', url: profileUrl }]],
+    inline_keyboard: [[{ text: 'url', url: profileUrl }]],
   };
   const userName = ctx.message?.from.username;
   const firstName = ctx.message?.from.first_name;
   //console.log(ctx);
   const inviteFrom = ctx.payload;
   const userId = ctx.from.id;
-  const data = await fetchinviter(tableMap.users, userId);
+  const data = await fetchInviter(tableMap.users, userId);
   const inviter = data[0].inviteFrom_id;
+
   console.log('1. inviter: ', inviter);
   console.log('2. inviteFrom: ', inviteFrom);
   console.log('3. userId: ', userId);
-  //console.log('your inviter : ' + inviter);
   //console.log(ctx.message);
-  //console.log('--------my name is:', userId,'-----------');
 
   const user = await getOrCreateUser(
     userId as number,
@@ -36,29 +35,29 @@ const start = () => async (ctx: any) => {
   }*/
 
   if (inviteFrom === '') {
-    //console.log('you are not invited from anyone');
     await ctx.replyWithMarkdownV2('You are not invited from anyone', {
-      // reply_markup: keyboardMarkup,
       parse_mode: 'Markdown',
     });
   } else if (inviteFrom === userId) {
-    //console.log('you are invited from yourself');
     await ctx.replyWithMarkdownV2('You are invited from yourself', {
-      // reply_markup: keyboardMarkup,
       parse_mode: 'Markdown',
     });
   } else {
     //const inviteString = `@${inviter}`;
     //console.log('you are invited from '+ inviteString);
-    const value = inviteFrom == inviter ? inviteFrom : inviter;
-    await ctx.replyWithMarkdownV2('You are invited from ' + value, {
-      //reply_markup: keyboardMarkup,
-      parse_mode: 'Markdown',
-    });
+    const value = inviteFrom === inviter ? inviteFrom : inviter;
+    console.log(value);
+    if (value === null) {
+      await ctx.replyWithMarkdownV2('You are not invited from anyone', {
+        parse_mode: 'Markdown',
+      });
+    } else {
+      await ctx.replyWithMarkdownV2('You are invited from ' + value, {
+        //reply_markup: keyboardMarkup,
+        parse_mode: 'Markdown',
+      });
+    }
   }
-  // else{
-  //   console.log("false");
-  // }
 
   /*await ctx.replyWithMarkdownV2('test start', {
     reply_markup: keyboardMarkup,

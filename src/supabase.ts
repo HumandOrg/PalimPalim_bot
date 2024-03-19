@@ -154,12 +154,12 @@ export async function inviteFromUser(userId: number, inviteFromId: number) {
   }
 }
 
-export async function fetchinviter(table_name: TableName, userid: string){
+export async function fetchInviter(table_name: TableName, userid: string) {
   try {
     const { data, error } = await supabase
-    .from(table_name)
-    .select('inviteFrom_id')
-    .eq('user_id', userid);
+      .from(table_name)
+      .select('inviteFrom_id')
+      .eq('user_id', userid);
     if (error) {
       logger.error('Error fetching data:', error);
       throw error;
