@@ -1,52 +1,73 @@
-import { getOrCreateUser } from '@/supabase';
+import { getOrCreateUser, supabase } from '@/supabase';
 import createDebug from 'debug';
-import { fetchInviter } from '@/supabase';
+import { fetchInviter, inviteFromUser } from '@/supabase';
+import { getUsernameOrName, getUsernameOrNameLocal } from '@/helpers';
+import { tableMap } from '@/types';
 
 const debug = createDebug('bot:about_command');
 
 const start = () => async (ctx: any) => {
   debug(`Triggered "start" command with message`);
-  const profileUrl = process.env.TMA_URL;
-  const keyboardMarkup = {
-    inline_keyboard: [[{ text: 'url', url: profileUrl }]],
-  };
-  const userName = ctx.from.username;
-  const firstName = ctx.from.first_name;
+  const userFrom = ctx.from;
+  const userName = userFrom.username;
+  const firstName = userFrom.first_name;
+  const lastName = userFrom.last_name;
+  const userId = userFrom.id;
   const inviteFrom = ctx.payload;
-  const userId = ctx.from.id;
+
+  await getOrCreateUser({
+    userId: Number(userId),
+    userName: userName ? userName : '',
+    firstName: firstName ? firstName : '',
+    lastName: lastName ? lastName : '',
+  });
   const data = await fetchInviter(userId);
-  const inviter = data[0].inviteFrom_id;
-
-  const name = userName ? userName : firstName ? firstName : '';
-
-  const user = await getOrCreateUser(
-    userId as number,
-    userName ? userName : firstName ? firstName : '',
-  );
-  const value = inviteFrom === inviter ? inviteFrom : inviter;
-
-  await ctx.replyWithMarkdownV2(
-    'Uncover a new syntax of your identity by hitting /start.',
-    { parse_mode: 'Markdown' },
-  );
-
+  const dataBaseInviterID = data.length > 0 ? data[0].inviteFrom_id : null;
   if (inviteFrom === '') {
-    const message1 = `Hi ${name}!\n\nYou were not invited by anyone, but you can still use this bot!\n`;
+    const message1 = `👋 Hey, ${getUsernameOrName(userFrom)}!\n\nYou were not invited by anyone\n\nbut you can still use this bot!\n`;
     await ctx.replyWithMarkdownV2(message1, {
       parse_mode: 'Markdown',
     });
-  } else if (inviteFrom === userId) {
-    const message2 = `Hi ${name}!\n\nThis is your own invitation link!\n\nSend it to your friends.`;
+    return;
+  } else if (Number(inviteFrom) === userId) {
+    const message2 = `👋 Hey, ${getUsernameOrName(userFrom)}!\n\nThis is your own invitation link!\n\nSend it to your friends.`;
     await ctx.replyWithMarkdownV2(message2, {
       parse_mode: 'Markdown',
     });
+    return;
   } else {
-    const message = value
-      ? 'You are not invited from anyone'
-      : `You are invited from ${value}`;
-    await ctx.replyWithMarkdownV2(message, {
-      parse_mode: 'Markdown',
-    });
+    if (dataBaseInviterID === null) {
+      const { data: existingUser, error: userError } = await supabase
+        .from(tableMap.users)
+        .select('*')
+        .eq('user_id', Number(inviteFrom));
+      if (existingUser.length === 0) {
+        return await ctx.replyWithMarkdownV2(
+          `👋 Hey, ${getUsernameOrName(userFrom)}!\n\nThis is not a valid invite link!\n`,
+          {
+            parse_mode: 'Markdown',
+          },
+        );
+      }
+      const inviterInfo = existingUser[0];
+
+      await inviteFromUser(userId, Number(inviteFrom));
+      await ctx.replyWithMarkdownV2(
+        `👋 Hey, ${getUsernameOrName(userFrom)}!\n\nYou have been invited by ${getUsernameOrNameLocal(inviterInfo)}\n`,
+        {
+          parse_mode: 'Markdown',
+        },
+      );
+      return;
+    }
+    const data = await getOrCreateUser({ userId: dataBaseInviterID });
+    const inviterInfo = data.length > 0 ? data[0] : null;
+    await ctx.replyWithMarkdownV2(
+      `👋 Hey, ${getUsernameOrName(userFrom)}!\n\nYou have been invited by ${getUsernameOrNameLocal(inviterInfo)}\n`,
+      {
+        parse_mode: 'Markdown',
+      },
+    );
   }
 };
 

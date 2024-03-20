@@ -13,14 +13,19 @@ const replyToMessage = (ctx: Context, messageId: number, string: string) =>
 
 const message = () => async (ctx: Context) => {
   debug('Triggered "message" event');
-  const userId = ctx.message?.from.id;
-  const userName = ctx.message?.from.username;
-  const firstName = ctx.message?.from.first_name;
+  const userFrom = ctx.from;
+  const userName = userFrom?.username;
+  const firstName = userFrom?.first_name;
+  const lastName = userFrom?.last_name;
+  const userId = userFrom?.id;
   const messageId = ctx.message?.message_id;
-  await getOrCreateUser(
-    userId as number,
-    userName ? userName : firstName ? firstName : '',
-  );
+
+  await getOrCreateUser({
+    userId: userId as number,
+    userName: userName ? userName : '',
+    firstName: firstName ? firstName : '',
+    lastName: lastName ? lastName : '',
+  });
   // if (messageId) {
   //   await replyToMessage(ctx, messageId, `Hello, ${userName}!`);
   // }

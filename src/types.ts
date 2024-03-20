@@ -18,6 +18,8 @@ export const tableMap: Record<TableName, TableName> = {
 export type UserData = {
   user_id: number;
   username: string;
+  first_name: string;
+  last_name: string;
   evm_address: string;
   google: string;
   twitter: string;

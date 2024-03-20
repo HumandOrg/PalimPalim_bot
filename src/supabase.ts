@@ -3,7 +3,7 @@ import { tableMap, TableName } from './types';
 const { createClient } = require('@supabase/supabase-js');
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_ANON_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+export const supabase = createClient(supabaseUrl, supabaseKey);
 
 // 查询数据
 export async function fetchData(table_name: TableName) {
@@ -65,7 +65,17 @@ export async function deleteData(table_name: TableName) {
     logger.error('Error deleting data:', error);
   }
 }
-export async function getOrCreateUser(userId: number, userName: string) {
+export async function getOrCreateUser({
+  userId,
+  userName,
+  firstName,
+  lastName,
+}: {
+  userId: number;
+  userName?: string;
+  firstName?: string;
+  lastName?: string;
+}) {
   try {
     const { data: existingUser, error: userError } = await supabase
       .from(tableMap.users)
@@ -75,13 +85,19 @@ export async function getOrCreateUser(userId: number, userName: string) {
     if (userError) {
       throw userError;
     }
-
     if (existingUser.length > 0) {
       return existingUser;
     } else {
       const { error: newUserError } = await supabase
         .from(tableMap.users)
-        .insert([{ user_id: userId, username: userName }])
+        .insert([
+          {
+            user_id: userId,
+            username: userName ? userName : undefined,
+            first_name: firstName ? firstName : undefined,
+            last_name: lastName ? lastName : undefined,
+          },
+        ])
         .single();
       if (newUserError) {
         throw newUserError;
