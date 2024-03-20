@@ -22,7 +22,7 @@ const leftMem = () => async (ctx: Context) => {
   const userName = `${ctx.message?.from.username}`;
 
   if (messageId) {
-    await replyToMessage(ctx, messageId, `Hello, ${userName}!`);
+    await replyToMessage(ctx, messageId, `Hello , ${userName}!`);
   }
 };
 
