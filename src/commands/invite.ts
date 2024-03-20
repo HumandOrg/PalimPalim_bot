@@ -12,8 +12,10 @@ const invite = () => async (ctx: Context) => {
   const name = userUsername ? userUsername : userFirstName ? userFirstName : '';
 
   const inviteLink = `https://t.me/${botName}?start=${userID}`;
-  const message = `Hi ${name}!\n\nHere is your invitation link!\n\n${inviteLink}\n\nSend it to your friends and let them join us.`;
-  await ctx.replyWithMarkdownV2(message, { parse_mode: 'Markdown' });
+  //console.log(botName);
+  const message = `Hi ${name}\\!\n\nHere is your invitation link\\!\n\n\`${inviteLink}\`\n\nSend it to your friends and let them join us\\.`;
+  // await ctx.replyWithMarkdownV2(message, { parse_mode: 'HTML' });
+  await ctx.replyWithMarkdownV2(message);
 };
 
 export { invite };
