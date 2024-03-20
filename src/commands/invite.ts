@@ -1,17 +1,18 @@
 import { Context } from 'telegraf';
 import createDebug from 'debug';
-import { fetchData } from '@/supabase';
-import { tableMap, UserData } from '@/types';
 
 const debug = createDebug('bot:about_command');
 
 const invite = () => async (ctx: Context) => {
   debug(`Triggered "invite" command with message`);
-  const botName = process.env.BOT_NAME;
-  const userData = (await fetchData(tableMap.users)) as UserData[];
-  const userID = userData[0].user_id;
+  const botName = process.env.BOT_NAME as string;
+  const userID = ctx.from?.id;
+  const userUsername = ctx.from?.username;
+  const userFirstName = ctx.from?.first_name;
+  const name = userUsername ? userUsername : userFirstName ? userFirstName : '';
+
   const inviteLink = `https://t.me/${botName}?start=${userID}`;
-  const message = `Hi ${userData[0].username}!\n\nHere is your invitation link!\n\n${inviteLink}\n\nSend it to your friends and let them join us.`;
+  const message = `Hi ${name}!\n\nHere is your invitation link!\n\n${inviteLink}\n\nSend it to your friends and let them join us.`;
   await ctx.replyWithMarkdownV2(message, { parse_mode: 'Markdown' });
 };
 
