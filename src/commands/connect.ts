@@ -5,7 +5,7 @@ const debug = createDebug('bot:about_command');
 
 const connect = () => async (ctx: Context) => {
   debug(`Triggered "connect" command with message`);
-  const profileUrl = 'https://tgt-dashboard.vercel.app/profile/';
+  const profileUrl = process.env.TMA_URL as string;
 
   const keyboardMarkup = {
     inline_keyboard: [[{ text: 'Connect Wallet', url: profileUrl }]],

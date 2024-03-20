@@ -153,18 +153,15 @@ export async function inviteFromUser(userId: number, inviteFromId: number) {
     logger.error('Error inserting data:', error);
   }
 }
-
-export async function fetchInviter(table_name: TableName, userid: string) {
+export async function fetchInviter(userId: string) {
   try {
     const { data, error } = await supabase
-      .from(table_name)
+      .from(tableMap.users)
       .select('inviteFrom_id')
-      .eq('user_id', userid);
+      .eq('user_id', userId);
     if (error) {
       logger.error('Error fetching data:', error);
-      throw error;
     }
-    // console.log('Fetched data:', data);
     return data;
   } catch (error) {
     logger.error('Error fetching data:', error);
