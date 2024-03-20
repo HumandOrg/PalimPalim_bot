@@ -11,10 +11,13 @@ const connect = () => async (ctx: Context) => {
     inline_keyboard: [[{ text: 'Connect Wallet', url: profileUrl }]],
   };
 
-  await ctx.replyWithMarkdownV2('Connect Wallet', {
-    reply_markup: keyboardMarkup,
-    parse_mode: 'Markdown',
-  });
+  await ctx.replyWithMarkdownV2(
+    'Thank you for using our Telegram Bot!\n\nYou can connect your wallet by clicking the link below and start enjoying more features and services:',
+    {
+      reply_markup: keyboardMarkup,
+      parse_mode: 'Markdown',
+    },
+  );
 };
 
 export { connect };

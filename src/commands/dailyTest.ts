@@ -12,7 +12,8 @@ const dailyTest = () => async (ctx: Context) => {
   //   type: 'web_app',
   //   web_app: { url: WEB_APP_URL },
   // });
-  const message = `*Go To Your Daily Test \\!*`;
+  const message = `*Go To Your Daily Test \\!*
+  Click on the button below to launch your daily test\\!`;
   await ctx.replyWithMarkdownV2(
     message,
     Markup.inlineKeyboard([Markup.button.webApp('📖', WEB_APP_URL)]),

@@ -19,11 +19,14 @@ const start = () => async (ctx: any) => {
   const userId = ctx.from.id;
   const data = await fetchInviter(tableMap.users, userId);
   const inviter = data[0].inviteFrom_id;
+  const chatName = ctx.from.first_name;
 
-  console.log('1. inviter: ', inviter);
-  console.log('2. inviteFrom: ', inviteFrom);
-  console.log('3. userId: ', userId);
-  //console.log(ctx.message);
+  //console.log('1. inviter: ', inviter);
+  //console.log('2. inviteFrom: ', inviteFrom);
+  //console.log('3. userId: ', userId);
+  //console.log('4. userName: ', userName);
+  console.log(ctx.message);
+  // console.log(ctx.from.first_name);
 
   const user = await getOrCreateUser(
     userId as number,
@@ -34,12 +37,22 @@ const start = () => async (ctx: any) => {
     await inviteFromUser(userId, inviteFrom);
   }*/
 
+  await ctx.replyWithMarkdownV2(
+    'Uncover a new syntax of your identity by hitting /start.',
+    { parse_mode: 'Markdown' },
+  );
+
   if (inviteFrom === '') {
-    await ctx.replyWithMarkdownV2('You are not invited from anyone', {
-      parse_mode: 'Markdown',
-    });
+    const message1 = `Hi ${chatName}!\n\nYou were not invited by anyone, but you can still use this bot!\n`;
+    await ctx.replyWithMarkdownV2(
+      /*'You are not invited from anyone'*/ message1,
+      {
+        parse_mode: 'Markdown',
+      },
+    );
   } else if (inviteFrom === userId) {
-    await ctx.replyWithMarkdownV2('You are invited from yourself', {
+    const message2 = `Hi ${user.username}!\n\nThis is your own invitation link!\n\nSend it to your friends.`;
+    await ctx.replyWithMarkdownV2(message2, {
       parse_mode: 'Markdown',
     });
   } else {
