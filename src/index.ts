@@ -2,7 +2,7 @@ import { Context, session, Telegraf } from 'telegraf';
 import {
   about,
   connect,
-  dailyTest,
+  dailytest,
   help,
   info,
   invite,
@@ -40,7 +40,7 @@ bot.use((ctx, next) => {
 
 bot.command('about', about());
 bot.command('connect', connect());
-bot.command('dailyTest', dailyTest());
+bot.command('dailytest', dailytest());
 bot.command('help', help());
 bot.command('info', info());
 bot.command('invite', invite());
