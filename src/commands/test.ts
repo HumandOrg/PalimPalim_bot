@@ -1,6 +1,6 @@
 import { Context } from 'telegraf';
 import createDebug from 'debug';
-import { deleteData, fetchData, insertData, getOrCreateUser } from '@/supabase';
+import { fetchData } from '../supabase';
 import { TableName } from '@/types';
 //import { getOrCreateChatUser } from '@/database';
 

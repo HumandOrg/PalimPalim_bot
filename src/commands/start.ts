@@ -1,6 +1,10 @@
-import { getOrCreateUser, supabase } from '@/supabase';
+import {
+  getOrCreateUser,
+  supabase,
+  fetchInviter,
+  inviteFromUser,
+} from '../supabase';
 import createDebug from 'debug';
-import { fetchInviter, inviteFromUser } from '@/supabase';
 import { getUsernameOrName, getUsernameOrNameLocal } from '@/helpers';
 import { tableMap } from '@/types';
 
