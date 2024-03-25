@@ -22,7 +22,8 @@ const start = () => async (ctx: any) => {
     lastName: lastName ? lastName : '',
   });
   const data = await fetchInviter(userId);
-  const dataBaseInviterID = data.length > 0 ? data[0].inviteFrom_id : null;
+  const dataBaseInviterID =
+    data && data.length > 0 ? data[0].inviteFrom_id : null;
   if (inviteFrom === '') {
     const message1 = `👋 Hey, ${getUsernameOrName(userFrom)}!\n\nYou were not invited by anyone\n\nbut you can still use this bot!\n`;
     await ctx.replyWithMarkdownV2(message1, {
@@ -41,7 +42,7 @@ const start = () => async (ctx: any) => {
         .from(tableMap.users)
         .select('*')
         .eq('user_id', Number(inviteFrom));
-      if (existingUser.length === 0) {
+      if (existingUser?.length === 0) {
         return await ctx.replyWithMarkdownV2(
           `👋 Hey, ${getUsernameOrName(userFrom)}!\n\nThis is not a valid invite link!\n`,
           {
@@ -49,7 +50,7 @@ const start = () => async (ctx: any) => {
           },
         );
       }
-      const inviterInfo = existingUser[0];
+      const inviterInfo = existingUser?.[0];
 
       await inviteFromUser(userId, Number(inviteFrom));
       await ctx.replyWithMarkdownV2(

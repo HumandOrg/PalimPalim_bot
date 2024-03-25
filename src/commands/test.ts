@@ -11,7 +11,7 @@ const test = () => async (ctx: Context) => {
   //await fetchData();
   const data = await fetchData('users' as TableName);
   // console.log('data : ', data);
-  console.log(data.user_id);
+  // console.log(data.user_id);
   //console.log(data);
   // const userID = 1;
   // const chatID = 2;
