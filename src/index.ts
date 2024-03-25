@@ -10,7 +10,7 @@ import {
   start,
   test,
 } from './commands';
-import { leftMem, message, newMem } from './event/index';
+import { leftMem, message, newMem } from './event';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { development, production } from './core';
 
