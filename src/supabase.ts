@@ -1,8 +1,8 @@
 import logger from '@/logger';
+import { createClient } from '@supabase/supabase-js';
 import { tableMap, TableName } from './types';
-const { createClient } = require('@supabase/supabase-js');
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_ANON_KEY;
+const supabaseUrl = process.env.SUPABASE_URL as string;
+const supabaseKey = process.env.SUPABASE_ANON_KEY as string;
 export const supabase = createClient(supabaseUrl, supabaseKey);
 
 // 查询数据
