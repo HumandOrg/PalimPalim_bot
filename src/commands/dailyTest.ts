@@ -9,7 +9,7 @@ const testUrl =
 const prodUrl = process.env.TMA_URL as string;
 const ENVIRONMENT = process.env.NODE_ENV || '';
 
-const dailytest = () => async (ctx: Context) => {
+const dailyTest = () => async (ctx: Context) => {
   debug(`Triggered "dailytest" command with message`);
   const url = ENVIRONMENT !== 'production' ? testUrl : prodUrl;
   // await ctx.setChatMenuButton({
@@ -24,4 +24,4 @@ const dailytest = () => async (ctx: Context) => {
   );
 };
 
-export { dailytest };
+export { dailyTest };

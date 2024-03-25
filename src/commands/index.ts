@@ -1,6 +1,6 @@
 export * from './about';
 export * from './connect';
-export * from './dailytest';
+export * from './dailyTest';
 export * from './help';
 export * from './info';
 export * from './invite';
