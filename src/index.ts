@@ -10,9 +10,11 @@ import {
   start,
   test,
 } from './commands';
-import { leftMem, message, newMem } from './event';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { development, production } from './core';
+import { message } from './event/message';
+import { newMem } from './event/newChatMem';
+import { leftMem } from './event/leftChatMem';
 
 const BOT_TOKEN = process.env.BOT_TOKEN || '';
 const ENVIRONMENT = process.env.NODE_ENV || '';
