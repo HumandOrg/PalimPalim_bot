@@ -1,8 +1,7 @@
 import { Context } from 'telegraf';
 import createDebug from 'debug';
 import { fetchData } from '../supabase';
-import { TableName } from '@/types';
-//import { getOrCreateChatUser } from '@/database';
+import { TableName } from '../types';
 
 const debug = createDebug('bot:about_command');
 

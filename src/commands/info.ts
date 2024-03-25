@@ -1,6 +1,6 @@
 import { Context } from 'telegraf';
 import createDebug from 'debug';
-import { tableMap } from '@/types';
+import { tableMap } from '../types';
 import { fetchData } from '../supabase';
 
 const debug = createDebug('bot:about_command');

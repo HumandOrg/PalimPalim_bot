@@ -5,8 +5,8 @@ import {
   inviteFromUser,
 } from '../supabase';
 import createDebug from 'debug';
-import { getUsernameOrName, getUsernameOrNameLocal } from '@/helpers';
-import { tableMap } from '@/types';
+import { getUsernameOrName, getUsernameOrNameLocal } from '../helpers';
+import { tableMap } from '../types';
 
 const debug = createDebug('bot:about_command');
 
