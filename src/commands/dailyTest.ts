@@ -5,7 +5,7 @@ const debug = createDebug('bot:about_command');
 
 const example = 'https://feathers.studio/telegraf/webapp/example';
 const testUrl =
-  'https://24ba-2001-b011-13-7cf7-4543-337b-ad2d-97ba.ngrok-free.app';
+  'https://0f0b-2001-b400-e25e-4d31-5426-4af8-dce5-55d7.ngrok-free.app/';
 const prodUrl = process.env.TMA_URL as string;
 const ENVIRONMENT = process.env.NODE_ENV || '';
 

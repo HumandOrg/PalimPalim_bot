@@ -13,7 +13,7 @@ export async function fetchData(table_name: TableName) {
       logger.error('Error fetching data:', error);
       throw error;
     }
-    console.log('Fetched data:', data);
+    console.log('Fetched data table:', table_name);
     return data;
   } catch (error) {
     logger.error('Error fetching data:', error);

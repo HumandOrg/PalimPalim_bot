@@ -8,13 +8,12 @@ const help = () => async (ctx: Context) => {
 
   const helpMsg = `Let me help you to know how to use me:
 *Commands :*
-/start - Start the bot
-/help - Show this message
-/about - Show information about the bot
-/dailyTest - Start the daily test
-/invite - Invite me to your group
-/feedback - Send feedback to the bot developer
-/settings - Change the bot settings`;
+/help - Let me help you to know how to use me
+/info - Artist info
+/invite - Get your referral link
+/mint - mint your art today
+/connect - connect Ton
+/dailytest - Go test and see what art you are`;
   await ctx.replyWithMarkdownV2(helpMsg, { parse_mode: 'Markdown' });
 };
 
