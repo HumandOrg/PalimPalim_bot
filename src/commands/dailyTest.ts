@@ -5,13 +5,13 @@ const debug = createDebug('bot:about_command');
 
 const example = 'https://feathers.studio/telegraf/webapp/example';
 const testUrl =
-  'https://0f0b-2001-b400-e25e-4d31-5426-4af8-dce5-55d7.ngrok-free.app/';
+  'https://f58a-2001-b011-13-30a9-cd1-23f2-c02-a701.ngrok-free.app/';
 const prodUrl = process.env.TMA_URL as string;
 const ENVIRONMENT = process.env.NODE_ENV || '';
 
 const dailyTest = () => async (ctx: Context) => {
   debug(`Triggered "dailytest" command with message`);
-  const url = ENVIRONMENT !== 'production' ? testUrl : prodUrl;
+  const url = ENVIRONMENT !== 'production' ? testUrl : testUrl;
   // await ctx.setChatMenuButton({
   //   text: 'Launch',
   //   type: 'web_app',
