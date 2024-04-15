@@ -9,6 +9,7 @@ import {
   mint,
   start,
   test,
+  testURL,
 } from './commands';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { development, production } from './core';
@@ -49,6 +50,7 @@ bot.command('invite', invite());
 bot.command('mint', mint());
 bot.command('start', start());
 bot.command('test', test());
+bot.command('testurl', testURL());
 
 bot.on('message', message());
 //TODO: Check V5 寫法
