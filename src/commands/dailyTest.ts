@@ -9,7 +9,7 @@ const ENVIRONMENT = process.env.NODE_ENV || '';
 
 const dailyTest = () => async (ctx: Context) => {
   debug(`Triggered "dailytest" command with message`);
-  const url = ENVIRONMENT !== 'production' ? prodUrl : testUrl;
+  const url = ENVIRONMENT !== 'production' ? testUrl : prodUrl;
   // await ctx.setChatMenuButton({
   //   text: 'Launch',
   //   type: 'web_app',
