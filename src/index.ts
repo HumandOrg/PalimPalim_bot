@@ -48,7 +48,7 @@ bot.command('help', help());
 bot.command('info', info());
 bot.command('invite', invite());
 // bot.command('mint', mint());
-// bot.command('testurl', testURL());
+bot.command('testurl', testURL());
 
 bot.on('message', message());
 bot.on;
