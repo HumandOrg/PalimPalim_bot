@@ -6,5 +6,4 @@ export * from './info';
 export * from './invite';
 export * from './mint';
 export * from './start';
-export * from './test';
 export * from './testURL';

@@ -10,10 +10,7 @@ const help = () => async (ctx: Context) => {
 *Commands :*
 /help - Let me help you to know how to use me
 /info - Artist info
-/invite - Get your referral link
-/mint - mint your art today
-/connect - connect Ton
-/dailytest - Go test and see what art you are`;
+/invite - Get your referral link`;
   await ctx.replyWithMarkdownV2(helpMsg, { parse_mode: 'Markdown' });
 };
 

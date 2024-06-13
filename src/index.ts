@@ -8,7 +8,6 @@ import {
   invite,
   mint,
   start,
-  test,
   testURL,
 } from './commands';
 import { VercelRequest, VercelResponse } from '@vercel/node';
@@ -41,18 +40,18 @@ bot.use((ctx, next) => {
   });
 });
 
-bot.command('about', about());
-bot.command('connect', connect());
-bot.command('dailytest', dailyTest());
+bot.command('start', start());
+// bot.command('about', about());
+// bot.command('connect', connect());
+// bot.command('dailytest', dailyTest());
 bot.command('help', help());
 bot.command('info', info());
 bot.command('invite', invite());
-bot.command('mint', mint());
-bot.command('start', start());
-bot.command('test', test());
-bot.command('testurl', testURL());
+// bot.command('mint', mint());
+// bot.command('testurl', testURL());
 
 bot.on('message', message());
+bot.on;
 //TODO: Check V5 寫法
 bot.on('new_chat_members', newMem());
 bot.on('left_chat_member', leftMem());
